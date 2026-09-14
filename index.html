@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Nwachukwu Caleb</title>
+        
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        
+        <!-- FontAwesome for Premium Icons -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        <!-- Google Fonts: Space Grotesk & Inter -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="stylesheet" href="./style.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+        <script>
+            tailwind.config = {
+            theme: {
+                extend: {
+                fontFamily: {
+                    sans: ['Inter', 'sans-serif'],
+                    display: ['Space Grotesk', 'sans-serif'],
+                    mono: ['Fira Code', 'monospace'],
+                },
+                colors: {
+                    brand: {
+                    black: '#030712',
+                    dark: '#0B0F19',
+                    darker: '#111827',
+                    accent: '#10B981', // Emerald green
+                    neonBlue: '#3B82F6', // Neon Blue
+                    neonPurple: '#8B5CF6', // Purple
+                    }
+                },
+                animation: {
+                    'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                }
+                }
+            }
+            }
+        </script>
+    </head>
+    <body class="bg-brand-black text-gray-100 font-sans selection:bg-brand-accent selection:text-brand-black overflow-x-hidden relative">
+        <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40"></canvas>
+        <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="mainHeader">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20 glass-card rounded-full px-6 mt-4 border border-white/10">
+                <!-- Logo -->
+                <a href="#hero" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-brand-neonBlue flex items-center justify-center text-white font-bold font-display shadow-lg shadow-brand-accent/20 group-hover:rotate-12 transition-transform duration-300">
+                    &lt;/&gt;
+                </div>
+                <span class="font-display font-bold text-lg tracking-wide bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent group-hover:text-brand-accent transition-colors duration-300">
+                    CALEB.DEV
+                </span>
+                </a>
+
+                <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+                <a href="#hero" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Home</a>
+                <a href="#about" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">About</a>
+                <a href="#roadmap" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Roadmap</a>
+                <a href="#playground" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Playground</a>
+                <a href="#projects" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Projects</a>
+                <a href="#arcade" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Arcade</a>
+                <a href="#contact" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Contact</a>
+                </nav>
+                <div class="hidden md:flex items-center gap-4">
+                <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-accent to-brand-neonBlue text-brand-black font-semibold text-sm hover:shadow-lg hover:shadow-brand-accent/30 hover:scale-105 transition-all duration-300">
+                    Let's Talk
+                </a>
+                </div>
+                <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl focus:outline-none">
+                <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            </div>
+            <div id="mobileMenu" class="hidden fixed inset-0 top-24 left-0 w-full h-[calc(100vh-6rem)] bg-brand-black/95 backdrop-blur-xl z-40 px-6 py-8 flex flex-col gap-6 md:hidden transition-all duration-300 border-t border-white/5">
+            <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+                <a href="#hero" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Home</a>
+                <a href="#about" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">About</a>
+                <a href="#roadmap" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Roadmap</a>
+                <a href="#playground" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Playground</a>
+                <a href="#projects" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Projects</a>
+                <a href="#arcade" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Arcade</a>
+                <a href="#contact" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Contact</a>
+            </nav>
+            <div class="mt-auto flex flex-col gap-4">
+                <a href="#contact" class="w-full py-4 rounded-xl text-center bg-gradient-to-r from-brand-accent to-brand-neonBlue text-brand-black font-bold">
+                Hire Me Now
+                </a>
+            </div>
+            </div>
+        </header>
+        <section id="hero" class="min-h-screen flex items-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+            <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/10 rounded-full blur-[220px] pointer-events-none animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-neonBlue/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+
+            <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+            <div class="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 self-center lg:self-start bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs font-semibold text-brand-accent tracking-wider uppercase">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-accent animate-ping"></span>
+                Available for Opportunities
+                </div>
+                
+                <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display leading-tight tracking-tight">
+                Turning Designs <br class="hidden sm:inline">
+                Into Clean, <br>
+                <span class="bg-gradient-to-r from-brand-accent via-brand-neonBlue to-brand-neonPurple bg-clip-text text-transparent glow-text-neon">
+                    Living Interfaces.
+                </span>
+                </h1>
+
+                <!-- Typing Animation Text Container -->
+                <p class="text-gray-400 text-lg sm:text-xl max-w-xl mx-auto lg:mx-0">
+                Hi, I am a  Front-end Developer specializing in creating immersive 
+                <span id="typingTarget" class="text-white font-semibold typing-cursor border-b border-brand-accent pb-1"></span>
+                </p>
+                
+                <!-- CTA Actions -->
+                <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-4">
+                <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-accent hover:bg-emerald-400 text-brand-black font-bold shadow-lg shadow-brand-accent/20 hover:shadow-brand-accent/40 transform hover:-translate-y-1 transition-all duration-300 text-center">
+                    View My Code
+                </a>
+                <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-white font-semibold border border-white/10 hover:bg-white/10 hover:border-white/20 transform hover:-translate-y-1 transition-all duration-300 text-center">
+                    Connect With Me
+                </a>
+                </div>
+
+                <div class="flex items-center justify-center lg:justify-start gap-6 mt-6 text-xl text-gray-400">
+                <a href="https://github.com/Caleb-c0des" class="hover:text-brand-accent transition-colors duration-400"><i class="fa-brands fa-github"></i></a>
+                <a href="https://www.tiktok.com/@calebc0de" class="hover:text-brand-neonPurple transition-colors duration-300"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="https://wa.me/+234 916 670 6325" class="hover:text-brand-accent transition-colors duration-300"><i class="fa-brands fa-whatsapp fa-lg"></i></a>
+                </div>
+            </div>
+
+            <div class="lg:col-span-5 w-full">
+                <div class="w-full glass-card rounded-2xl overflow-hidden shadow-2xl border border-white/10 font-mono text-xs sm:text-sm tilt-card" id="heroTerminalCard">
+                <div class="bg-gray-950/80 px-4 py-3 flex items-center justify-between border-b border-white/5">
+                    <div class="flex items-center gap-1.5">
+                    <span class="w-3 h-3 rounded-full bg-red-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+                    <span class="w-3 h-3 rounded-full bg-green-500"></span>
+                    
+                    </div>
+                    <div class="text-gray-500 font-medium select-none text-xs">interactive-terminal.sh</div>
+                    <div class="w-8"></div>
+                </div>
+                
+                <!-- Terminal Body -->
+                <div class="p-5 h-80 overflow-y-auto flex flex-col gap-3 text-emerald-400" id="terminalScreen">
+                    <p class="text-gray-500">// Welcome to my portfolio CLI. Type 'help' to start.</p>
+                    <div class="flex items-center gap-2">
+                    <span class="text-brand-neonBlue">visitor@portfolio:~$&nbsp;</span>
+                    <span class="text-white">about</span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">
+                    Hello! I am a front-end developer obsessed with pixel-perfect design, creative animations, and lightning-fast architectures. I turn code into art.
+                    </p>
+                    
+                    <!-- Terminal Output Target -->
+                    <div id="terminalHistory" class="flex flex-col gap-2"></div>
+
+                    <!-- Terminal Active Prompt -->
+                    <div class="flex items-center gap-1.5 mt-auto">
+                    <span class="text-brand-neonBlue font-semibold select-none">visitor@portfolio:~$&nbsp;</span>
+                    <input type="text" id="terminalInput" class="bg-transparent text-white border-none outline-none focus:ring-0 p-0 w-full caret-brand-accent" placeholder="Type command..." autocomplete="off">
+                    </div>
+                </div>
+                </div>
+            </div>
+            </div>
+        </section>
+        <section id="about" class="py-24 bg-brand-dark/90 relative border-y border-white/5">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-xs font-mono text-brand-accent font-bold uppercase tracking-widest block mb-2">// 01. CORE PROFILE</span>
+                <h2 class="text-3xl sm:text-5xl font-extrabold font-display bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+                About & Tech Stack
+                </h2>
+                <p class="text-gray-400 mt-3 text-sm sm:text-base">Combining semantic precision, accessible architecture, and responsive state management.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+                
+                <!-- Bio Glass Card -->
+                <div class="lg:col-span-6 glass-card p-8 rounded-3xl border border-white/10 flex flex-col justify-between hover:border-brand-accent/30 transition-all duration-500">
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                    <div class="w-12 h-12 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent text-xl border border-brand-accent/20">
+                        <i class="fa-solid fa-user-gear"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-display font-bold text-white">Frontend Developer</h3>
+                        <span class="text-xs font-mono text-gray-400">Learning in public, building every week</span>
+                    </div>
+                    </div>
+
+                    <p class="text-gray-300 text-sm leading-relaxed mb-4">
+                    I focus on writing clean, semantic HTML and expressive CSS, styled quickly and consistently with Tailwind. I'm steadily leveling up my JavaScript so pages don't just look good, they respond, animate, and feel alive.
+                    </p>
+                    <p class="text-gray-300 text-sm leading-relaxed mb-6">
+                    My core ethos: solid structure first, responsive layout always, and a little interactivity to make every project worth clicking around in.
+                    </p>
+                </div>
+
+                <!-- Now Learning -->
+                <div class="border-t border-white/10 pt-6 mt-4">
+                    <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest block mb-3">Currently Focused On</span>
+                    <div class="flex flex-wrap gap-2">
+                    <span class="px-3 py-1.5 rounded-lg bg-brand-accent/10 border border-brand-accent/30 text-brand-accent text-xs font-mono font-bold">JavaScript Fundamentals</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-mono">Fetch API & Async/Await</span>
+                    <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-mono">Array Methods</span>
+                    </div>
+                </div>
+                </div>
+
+                <!-- Skill Bars Container -->
+                <div class="lg:col-span-6 glass-card p-8 rounded-3xl border border-white/10 flex flex-col justify-between">
+                <h3 class="text-lg font-display font-bold text-white mb-6 flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-brand-neonBlue text-sm"></i>
+                    <span>Technical Proficiency Stack</span>
+                </h3>
+
+                <div class="space-y-5">
+                    <div>
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-200">HTML5 / Semantic Markup</span>
+                        <span class="text-brand-accent font-bold">90%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                        <div class="bg-gradient-to-r from-brand-accent to-emerald-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 0%" data-width="90%"></div>
+                    </div>
+                    </div>
+
+                    <div>
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-200">CSS3 & Tailwind CSS</span>
+                        <span class="text-brand-neonBlue font-bold">85%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                        <div class="bg-gradient-to-r from-brand-neonBlue to-cyan-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 0%" data-width="85%" ></div>
+                    </div>
+                    </div>
+
+                    <div>
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-200">JavaScript (ES6+) — Growing Daily</span>
+                        <span class="text-brand-neonPurple font-bold">10%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                        <div class="bg-gradient-to-r from-brand-neonPurple to-fuchsia-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 0%" data-width="10%"></div>
+                    </div>
+                    </div>
+
+                    <!-- Skill Bar: Responsive Design -->
+                    <div>
+                    <div class="flex justify-between text-xs font-mono mb-1.5">
+                        <span class="text-gray-200">Responsive & Accessible Layouts</span>
+                        <span class="text-brand-pink font-bold">80%</span>
+                    </div>
+                    <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                        <div class="bg-gradient-to-r from-brand-neonBlue to-rose-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 0%" data-width="90%"></div>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Quick Tech Tags -->
+                <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-white/10">
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Git / GitHub</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Tailwind CSS</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Flexbox / Grid</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">DOM APIs</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">VS Code</span>
+                    <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Chrome DevTools</span>
+                </div>
+                </div>
+
+            </div>
+            </div>
+        </section>
+        <section id="roadmap" class="w-[88%] max-w-3xl mx-auto mt-16 mb-24">
+            <h1 class="text-3xl sm:text-5xl font-extrabold font-display bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent text-center">
+                 Where I'm at,honestly
+            </h1>
+            <p class="text-gray-400 mt-4 mb-4 font-light font-display bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent text-center">
+                No inflated résumé buzzwords — here's the real progression, one stage at a time.
+            </p>
+            <div class="grid grid-cols-[64px_1fr] gap-x-7">
+                <div class="flex flex-col items-center">
+                <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-teal-400/60 text-teal-400 font-semibold text-sm">
+                    &lt;/&gt;
+                </div>
+                <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-teal-400 to-blue-400 opacity-30"></div>
+                </div>
+                <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-teal-400">
+                        
+                    </span>
+                    <span class="font-mono text-[11.5px] tracking-wide text-teal-400">SOLID</span>
+                </div>
+                <h2 class="font-semibold text-xl mb-2.5 text-slate-100">HTML &amp; CSS foundations</h2>
+                <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Semantic markup, box model, Flexbox, Grid — the stuff every layout is built on.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-[64px_1fr] gap-x-7">
+                <div class="flex flex-col items-center">
+                <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-blue-400/60 text-blue-400 font-semibold text-sm"><i class="fa-brands fa-css3"></i></div>
+                <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-blue-400 to-purple-400 opacity-30"></div>
+                </div>
+                <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+                    <span class="font-mono text-[11.5px] tracking-wide text-blue-400">COMFORTABLE</span>
+                </div>
+                <h2 class="font-semibold text-xl mb-2.5 text-slate-100">Tailwind CSS</h2>
+                <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Building fast with utility classes, responsive breakpoints, and reusable design tokens.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-[64px_1fr] gap-x-7">
+                <div class="flex flex-col items-center">
+                <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-purple-400/60 text-purple-400 font-semibold text-sm"><i class="fa-brands fa-square-js"></i></div>
+                <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-purple-400 to-amber-400 opacity-30"></div>
+                </div>
+                <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+                    <span class="font-mono text-[11.5px] tracking-wide text-purple-400">IN PROGRESS</span>
+                </div>
+                <h2 class="font-semibold text-xl mb-2.5 text-slate-100">JavaScript (ES6+)</h2>
+                <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">DOM events, array methods, fetch/async — practicing with small interactive builds like the ones on this page.</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-[64px_1fr] gap-x-7">
+                <div class="flex flex-col items-center">
+                <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-amber-400/60 text-amber-400 font-semibold text-sm">⚑</div>
+                </div>
+                <div class="p-7 pb-8 rounded-2xl border border-slate-800 bg-slate-900/60">
+                <div class="flex items-center gap-2.5 mb-3.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                    <span class="font-mono text-[11.5px] tracking-wide text-amber-400">UP NEXT</span>
+                </div>
+                <h2 class="font-semibold text-xl mb-2.5 text-slate-100">APIs &amp; a JS framework</h2>
+                <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Consuming real APIs comfortably, then picking up React or Vue once JS fundamentals are second nature.</p>
+                </div>
+            </div>
+        </section>
+        <script src="./script.js"></script>
+    </body>
+
+</html>

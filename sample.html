@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Developer Portfolio & Playground</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts: Space Grotesk & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Space Grotesk', 'sans-serif'],
+            mono: ['Fira Code', 'monospace'],
+          },
+          colors: {
+            brand: {
+              black: '#030712',
+              dark: '#0B0F19',
+              darker: '#111827',
+              accent: '#10B981', // Emerald green
+              neonBlue: '#3B82F6', // Neon Blue
+              neonPurple: '#8B5CF6', // Purple
+            }
+          },
+          animation: {
+            'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030712;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #10B981;
+    }
+
+    /* Glow Effects */
+    .glow-accent {
+      box-shadow: 0 0 20px rgba(16, 185, 129, 0.2);
+    }
+    .glow-text-neon {
+      text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+    }
+
+    /* Glassmorphism */
+    .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* 3D Card Hover Setup */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    /* Typing effect cursor */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s step-start infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+     /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #030712;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1f2937;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent-color, #10B981);
+    }
+
+    :root {
+      --accent-color: #10B981;
+      --accent-glow: rgba(16, 185, 129, 0.3);
+    }
+
+    /* Dynamic Glow Utilities */
+    .glow-accent {
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+    .glow-text {
+      text-shadow: 0 0 15px var(--accent-glow);
+    }
+
+    /* Glassmorphism Classes */
+    .glass-card {
+      background: rgba(17, 24, 39, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .glass-nav {
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    /* 3D Tilt Card */
+    .tilt-card {
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    /* Typing Cursor Animation */
+    .typing-cursor::after {
+      content: '|';
+      animation: blink 1s step-start infinite;
+      color: var(--accent-color, #10B981);
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* Custom Radio Input Toggle for Themes */
+    .theme-dot {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .theme-dot:hover {
+      transform: scale(1.2);
+    }
+
+    /* Accessible focus states */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    textarea:focus-visible {
+      outline: 2px solid var(--accent-color, #10B981);
+      outline-offset: 2px;
+    }
+
+    /* Skip link */
+    .skip-link {
+      position: absolute;
+      top: -100px;
+      left: 1rem;
+      z-index: 100;
+      background: var(--accent-color, #10B981);
+      color: #030712;
+      font-weight: 700;
+      padding: 0.75rem 1.25rem;
+      border-radius: 0.75rem;
+      transition: top 0.2s ease;
+    }
+    .skip-link:focus {
+      top: 1rem;
+    }
+
+    /* Respect reduced-motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body class="bg-brand-black text-gray-100 font-sans selection:bg-brand-accent selection:text-brand-black overflow-x-hidden relative">
+
+  <!-- Interactive HTML5 Canvas Background -->
+  <canvas id="particleCanvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40"></canvas>
+
+  <!-- --- NAVIGATION HEADER --- -->
+  <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300" id="mainHeader">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 glass-card rounded-full px-6 mt-4 border border-white/10">
+        <!-- Logo -->
+        <a href="#hero" class="flex items-center gap-2 group">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-brand-accent to-brand-neonBlue flex items-center justify-center text-white font-bold font-display shadow-lg shadow-brand-accent/20 group-hover:rotate-12 transition-transform duration-300">
+            &lt;/&gt;
+          </div>
+          <span class="font-display font-bold text-lg tracking-wide bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent group-hover:text-brand-accent transition-colors duration-300">
+            DEV.PORTFOLIO
+          </span>
+        </a>
+
+        <!-- Desktop Navigation (Scroll Spy Ready) -->
+        <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+          <a href="#hero" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Home</a>
+          <a href="#about" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">About</a>
+          <a href="#roadmap" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Roadmap</a>
+          <a href="#playground" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Playground</a>
+          <a href="#projects" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Projects</a>
+          <a href="#arcade" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Arcade</a>
+          <a href="#contact" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Contact</a>
+        </nav>
+
+        <!-- CTA Action Buttons -->
+        <div class="hidden md:flex items-center gap-4">
+          <button id="soundToggle" class="text-gray-400 hover:text-brand-accent transition-colors duration-300 text-lg p-2" title="Ambient Interactive Sounds">
+            <i class="fa-solid fa-volume-mute" id="soundIcon"></i>
+          </button>
+          <a href="#contact" class="px-5 py-2.5 rounded-full bg-gradient-to-r from-brand-accent to-brand-neonBlue text-brand-black font-semibold text-sm hover:shadow-lg hover:shadow-brand-accent/30 hover:scale-105 transition-all duration-300">
+            Let's Talk
+          </a>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobileMenuBtn" class="md:hidden text-gray-300 hover:text-white text-2xl focus:outline-none">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Drawer Navigation -->
+    <div id="mobileMenu" class="hidden fixed inset-0 top-24 left-0 w-full h-[calc(100vh-6rem)] bg-brand-black/95 backdrop-blur-xl z-40 px-6 py-8 flex flex-col gap-6 md:hidden transition-all duration-300 border-t border-white/5">
+      <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/5">
+          <a href="#hero" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Home</a>
+          <a href="#about" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">About</a>
+          <a href="#roadmap" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Roadmap</a>
+          <a href="#playground" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Playground</a>
+          <a href="#projects" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Projects</a>
+          <a href="#arcade" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Arcade</a>
+          <a href="#contact" class="nav-link px-4 py-2 rounded-full text-xs font-semibold uppercase tracking-wider text-gray-300 hover:text-white transition-all duration-300">Contact</a>
+     </nav>
+      <div class="mt-auto flex flex-col gap-4">
+        <a href="#contact" class="w-full py-4 rounded-xl text-center bg-gradient-to-r from-brand-accent to-brand-neonBlue text-brand-black font-bold">
+          Hire Me Now
+        </a>
+      </div>
+    </div>
+  </header>
+  <!-- --- HERO SECTION --- -->
+  <section id="hero" class="min-h-screen flex items-center pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <!-- Decorative Ambient Glows -->
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-brand-accent/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-brand-neonBlue/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-12 items-center w-full">
+      <!-- Left Hero Text Column -->
+      <div class="lg:col-span-7 flex flex-col gap-6 text-center lg:text-left">
+        <div class="inline-flex items-center gap-2 self-center lg:self-start bg-white/5 border border-white/10 px-4 py-2 rounded-full text-xs font-semibold text-brand-accent tracking-wider uppercase">
+          <span class="w-2.5 h-2.5 rounded-full bg-brand-accent animate-ping"></span>
+          Available for Opportunities
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold font-display leading-tight tracking-tight">
+          Crafting the <br class="hidden sm:inline">
+          Future of the <br>
+          <span class="bg-gradient-to-r from-brand-accent via-brand-neonBlue to-brand-neonPurple bg-clip-text text-transparent glow-text-neon">
+            Interactive Web
+          </span>
+        </h1>
+
+        <!-- Typing Animation Text Container -->
+        <p class="text-gray-400 text-lg sm:text-xl max-w-xl mx-auto lg:mx-0">
+          Hi, I am a Developer specializing in creating immersive 
+          <span id="typingTarget" class="text-white font-semibold typing-cursor border-b border-brand-accent pb-1"></span>
+        </p>
+
+        <!-- CTA Actions -->
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-4">
+          <a href="#projects" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-brand-accent hover:bg-emerald-400 text-brand-black font-bold shadow-lg shadow-brand-accent/20 hover:shadow-brand-accent/40 transform hover:-translate-y-1 transition-all duration-300 text-center">
+            View My Code
+          </a>
+          <a href="#contact" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-card text-white font-semibold border border-white/10 hover:bg-white/10 hover:border-white/20 transform hover:-translate-y-1 transition-all duration-300 text-center">
+            Connect With Me
+          </a>
+        </div>
+
+        <!-- Social Icons Stack -->
+        <div class="flex items-center justify-center lg:justify-start gap-6 mt-6 text-xl text-gray-400">
+          <a href="#" class="hover:text-brand-accent transition-colors duration-300"><i class="fa-brands fa-github"></i></a>
+          <a href="#" class="hover:text-brand-neonBlue transition-colors duration-300"><i class="fa-brands fa-linkedin"></i></a>
+          <a href="#" class="hover:text-brand-neonPurple transition-colors duration-300"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#" class="hover:text-brand-accent transition-colors duration-300"><i class="fa-brands fa-codepen"></i></a>
+        </div>
+      </div>
+
+      <!-- Right Interactive Terminal Column -->
+      <div class="lg:col-span-5 w-full">
+        <!-- Interactive Terminal Widget -->
+        <div class="w-full glass-card rounded-2xl overflow-hidden shadow-2xl border border-white/10 font-mono text-xs sm:text-sm tilt-card" id="heroTerminalCard">
+          <!-- Terminal Header -->
+          <div class="bg-gray-950/80 px-4 py-3 flex items-center justify-between border-b border-white/5">
+            <div class="flex items-center gap-1.5">
+              <span class="w-3 h-3 rounded-full bg-red-500"></span>
+              <span class="w-3 h-3 rounded-full bg-yellow-500"></span>
+              <span class="w-3 h-3 rounded-full bg-green-500"></span>
+            </div>
+            <div class="text-gray-500 font-medium select-none text-xs">interactive-terminal.sh</div>
+            <div class="w-8"></div>
+          </div>
+          
+          <!-- Terminal Body -->
+          <div class="p-5 h-80 overflow-y-auto flex flex-col gap-3 text-emerald-400" id="terminalScreen">
+            <p class="text-gray-500">// Welcome to my portfolio CLI. Type 'help' to start.</p>
+            <div class="flex items-center gap-2">
+              <span class="text-brand-neonBlue">visitor@portfolio:~$&nbsp;</span>
+              <span class="text-white">about</span>
+            </div>
+            <p class="text-gray-300 leading-relaxed">
+              Hello! I am a full-stack developer obsessed with pixel-perfect design, creative animations, and lightning-fast architectures. I turn code into art.
+            </p>
+            
+            <!-- Terminal Output Target -->
+            <div id="terminalHistory" class="flex flex-col gap-2"></div>
+
+            <!-- Terminal Active Prompt -->
+            <div class="flex items-center gap-1.5 mt-auto">
+              <span class="text-brand-neonBlue font-semibold select-none">visitor@portfolio:~$&nbsp;</span>
+              <input type="text" id="terminalInput" class="bg-transparent text-white border-none outline-none focus:ring-0 p-0 w-full caret-brand-accent" placeholder="Type command..." autocomplete="off">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="about" class="py-24 bg-brand-dark/90 relative border-y border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-mono text-brand-accent font-bold uppercase tracking-widest block mb-2">// 01. CORE PROFILE</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold font-display bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+          About & Tech Stack
+        </h2>
+        <p class="text-gray-400 mt-3 text-sm sm:text-base">Combining semantic precision, accessible architecture, and responsive state management.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-stretch">
+        
+        <!-- Bio Glass Card -->
+        <div class="lg:col-span-6 glass-card p-8 rounded-3xl border border-white/10 flex flex-col justify-between hover:border-brand-accent/30 transition-all duration-500">
+          <div>
+            <div class="flex items-center gap-3 mb-6">
+              <div class="w-12 h-12 bg-brand-accent/10 rounded-2xl flex items-center justify-center text-brand-accent text-xl border border-brand-accent/20">
+                <i class="fa-solid fa-user-gear"></i>
+              </div>
+              <div>
+                <h3 class="text-xl font-display font-bold text-white">Frontend Developer</h3>
+                <span class="text-xs font-mono text-gray-400">Learning in public, building every week</span>
+              </div>
+            </div>
+
+            <p class="text-gray-300 text-sm leading-relaxed mb-4">
+              I focus on writing clean, semantic HTML and expressive CSS, styled quickly and consistently with Tailwind. I'm steadily leveling up my JavaScript so pages don't just look good, they respond, animate, and feel alive.
+            </p>
+            <p class="text-gray-300 text-sm leading-relaxed mb-6">
+              My core ethos: solid structure first, responsive layout always, and a little interactivity to make every project worth clicking around in.
+            </p>
+          </div>
+
+          <!-- Now Learning -->
+          <div class="border-t border-white/10 pt-6 mt-4">
+            <span class="text-[10px] font-mono text-gray-400 uppercase tracking-widest block mb-3">Currently Focused On</span>
+            <div class="flex flex-wrap gap-2">
+              <span class="px-3 py-1.5 rounded-lg bg-brand-accent/10 border border-brand-accent/30 text-brand-accent text-xs font-mono font-bold">JavaScript Fundamentals</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-mono">Fetch API & Async/Await</span>
+              <span class="px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-gray-300 text-xs font-mono">Array Methods</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Skill Bars Container -->
+        <div class="lg:col-span-6 glass-card p-8 rounded-3xl border border-white/10 flex flex-col justify-between">
+          <h3 class="text-lg font-display font-bold text-white mb-6 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group text-brand-neonBlue text-sm"></i>
+            <span>Technical Proficiency Stack</span>
+          </h3>
+
+          <div class="space-y-5">
+            <!-- Skill Bar: HTML5 -->
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-gray-200">HTML5 / Semantic Markup</span>
+                <span class="text-brand-accent font-bold">90%</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                <div class="bg-gradient-to-r from-brand-accent to-emerald-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 90%"></div>
+              </div>
+            </div>
+
+            <!-- Skill Bar: CSS / Tailwind -->
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-gray-200">CSS3 & Tailwind CSS</span>
+                <span class="text-brand-neonBlue font-bold">85%</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                <div class="bg-gradient-to-r from-brand-neonBlue to-cyan-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 85%"></div>
+              </div>
+            </div>
+
+            <!-- Skill Bar: JavaScript -->
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-gray-200">JavaScript (ES6+) — Growing Daily</span>
+                <span class="text-brand-neonPurple font-bold">55%</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                <div class="bg-gradient-to-r from-brand-neonPurple to-fuchsia-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 55%"></div>
+              </div>
+            </div>
+
+            <!-- Skill Bar: Responsive Design -->
+            <div>
+              <div class="flex justify-between text-xs font-mono mb-1.5">
+                <span class="text-gray-200">Responsive & Accessible Layouts</span>
+                <span class="text-brand-pink font-bold">80%</span>
+              </div>
+              <div class="w-full bg-slate-950 rounded-full h-2.5 overflow-hidden border border-white/5">
+                <div class="bg-gradient-to-r from-brand-pink to-rose-400 h-full rounded-full transition-all duration-1000 ease-out skill-bar" style="width: 80%"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Tech Tags -->
+          <div class="flex flex-wrap gap-2 mt-6 pt-4 border-t border-white/10">
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Git / GitHub</span>
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Tailwind CSS</span>
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Flexbox / Grid</span>
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">DOM APIs</span>
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">VS Code</span>
+            <span class="px-3 py-1 rounded-lg bg-white/5 border border-white/10 text-[11px] font-mono text-gray-300">Chrome DevTools</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section class="w-[88%] max-w-3xl mx-auto mt-24 mb-16">
+  <div class="font-mono text-[13px] text-slate-500 mb-5">// 02. learning roadmap</div>
+  <h1 class="font-semibold text-4xl md:text-6xl leading-tight tracking-tight text-slate-100 max-w-xl">
+    Where I'm at, <span class="text-teal-400">honestly</span>
+  </h1>
+  <p class="mt-5 text-slate-400 text-base leading-relaxed max-w-md">
+    No inflated résumé buzzwords — here's the real progression, one stage at a time.
+  </p>
+</section>
+
+<section id="roadmap" class="w-[88%] max-w-3xl mx-auto mt-16 mb-24">
+
+  <!-- Step 1 -->
+  <div class="grid grid-cols-[64px_1fr] gap-x-7">
+    <div class="flex flex-col items-center">
+      <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-teal-400/60 text-teal-400 font-semibold text-sm">✓</div>
+      <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-teal-400 to-blue-400 opacity-30"></div>
+    </div>
+    <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+      <div class="flex items-center gap-2.5 mb-3.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-teal-400"></span>
+        <span class="font-mono text-[11.5px] tracking-wide text-teal-400">SOLID</span>
+      </div>
+      <h2 class="font-semibold text-xl mb-2.5 text-slate-100">HTML &amp; CSS foundations</h2>
+      <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Semantic markup, box model, Flexbox, Grid — the stuff every layout is built on.</p>
+    </div>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="grid grid-cols-[64px_1fr] gap-x-7">
+    <div class="flex flex-col items-center">
+      <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-blue-400/60 text-blue-400 font-semibold text-sm">⚡</div>
+      <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-blue-400 to-purple-400 opacity-30"></div>
+    </div>
+    <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+      <div class="flex items-center gap-2.5 mb-3.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-blue-400"></span>
+        <span class="font-mono text-[11.5px] tracking-wide text-blue-400">COMFORTABLE</span>
+      </div>
+      <h2 class="font-semibold text-xl mb-2.5 text-slate-100">Tailwind CSS</h2>
+      <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Building fast with utility classes, responsive breakpoints, and reusable design tokens.</p>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="grid grid-cols-[64px_1fr] gap-x-7">
+    <div class="flex flex-col items-center">
+      <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-purple-400/60 text-purple-400 font-semibold text-sm">&lt;/&gt;</div>
+      <div class="w-px flex-1 min-h-[32px] my-1 bg-gradient-to-b from-purple-400 to-amber-400 opacity-30"></div>
+    </div>
+    <div class="p-7 pb-8 mb-10 rounded-2xl border border-slate-800 bg-slate-900/60">
+      <div class="flex items-center gap-2.5 mb-3.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-purple-400"></span>
+        <span class="font-mono text-[11.5px] tracking-wide text-purple-400">IN PROGRESS</span>
+      </div>
+      <h2 class="font-semibold text-xl mb-2.5 text-slate-100">JavaScript (ES6+)</h2>
+      <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">DOM events, array methods, fetch/async — practicing with small interactive builds like the ones on this page.</p>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="grid grid-cols-[64px_1fr] gap-x-7">
+    <div class="flex flex-col items-center">
+      <div class="w-11 h-11 rounded-full grid place-items-center bg-slate-900 border border-amber-400/60 text-amber-400 font-semibold text-sm">⚑</div>
+    </div>
+    <div class="p-7 pb-8 rounded-2xl border border-slate-800 bg-slate-900/60">
+      <div class="flex items-center gap-2.5 mb-3.5">
+        <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+        <span class="font-mono text-[11.5px] tracking-wide text-amber-400">UP NEXT</span>
+      </div>
+      <h2 class="font-semibold text-xl mb-2.5 text-slate-100">APIs &amp; a JS framework</h2>
+      <p class="text-slate-400 text-[14.5px] leading-relaxed max-w-md">Consuming real APIs comfortably, then picking up React or Vue once JS fundamentals are second nature.</p>
+    </div>
+  </div>
+
+</section>
+<section id="playground" class="py-24 relative bg-brand-black">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-mono text-brand-neonBlue font-bold uppercase tracking-widest block mb-2">// 03. INTERACTIVE STUDIO</span>
+        <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white">
+          Glassmorphism & Style Lab
+        </h2>
+        <p class="text-gray-400 mt-3 text-sm sm:text-base">Tweak real-time CSS controls below to customize an element and copy the resulting code directly!</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- Controls Console -->
+        <div class="lg:col-span-6 glass-card p-8 rounded-3xl border border-white/10 flex flex-col gap-6">
+          <div class="flex items-center justify-between pb-3 border-b border-white/10">
+            <span class="text-xs font-mono font-bold text-white uppercase flex items-center gap-2">
+              <i class="fa-solid fa-sliders text-brand-accent"></i> Style Parameters
+            </span>
+            <button onclick="resetLab()" class="text-xs font-mono text-gray-400 hover:text-brand-accent">Reset Defaults</button>
+          </div>
+
+          <!-- Slider 1: Blur -->
+          <div>
+            <div class="flex justify-between text-xs font-mono text-gray-300 mb-2">
+              <span>Backdrop Blur:</span>
+              <span id="labBlurVal" class="text-brand-accent font-bold">16px</span>
+            </div>
+            <input type="range" id="labBlur" min="0" max="40" value="16" class="w-full accent-brand-accent cursor-pointer bg-slate-900 rounded-lg h-2">
+          </div>
+
+          <!-- Slider 2: Opacity -->
+          <div>
+            <div class="flex justify-between text-xs font-mono text-gray-300 mb-2">
+              <span>Background Opacity:</span>
+              <span id="labOpacityVal" class="text-brand-neonBlue font-bold">0.70</span>
+            </div>
+            <input type="range" id="labOpacity" min="0" max="100" value="70" class="w-full accent-brand-neonBlue cursor-pointer bg-slate-900 rounded-lg h-2">
+          </div>
+
+          <!-- Slider 3: Border Radius -->
+          <div>
+            <div class="flex justify-between text-xs font-mono text-gray-300 mb-2">
+              <span>Corner Radius:</span>
+              <span id="labRadiusVal" class="text-brand-neonPurple font-bold">24px</span>
+            </div>
+            <input type="range" id="labRadius" min="0" max="50" value="24" class="w-full accent-brand-neonPurple cursor-pointer bg-slate-900 rounded-lg h-2">
+          </div>
+
+          <!-- Selector 4: Glow Color Accent -->
+          <div>
+            <span class="text-xs font-mono text-gray-300 block mb-2">Glow Highlight Accent:</span>
+            <div class="flex gap-3">
+              <button onclick="setLabAccent('#10B981')" class="w-8 h-8 rounded-full bg-emerald-500 border border-white/20 focus:ring-2 ring-white"></button>
+              <button onclick="setLabAccent('#3B82F6')" class="w-8 h-8 rounded-full bg-blue-500 border border-white/20 focus:ring-2 ring-white"></button>
+              <button onclick="setLabAccent('#8B5CF6')" class="w-8 h-8 rounded-full bg-purple-500 border border-white/20 focus:ring-2 ring-white"></button>
+              <button onclick="setLabAccent('#EC4899')" class="w-8 h-8 rounded-full bg-pink-500 border border-white/20 focus:ring-2 ring-white"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Preview Output Card -->
+        <div class="lg:col-span-6 flex flex-col items-center justify-center relative p-6">
+          
+          <!-- Background target graphic -->
+          <div class="absolute inset-0 bg-gradient-to-tr from-brand-accent/20 via-brand-neonBlue/20 to-brand-neonPurple/20 rounded-3xl blur-2xl -z-10"></div>
+          
+          <!-- Customizable Target Card -->
+          <div id="labTargetCard" class="w-full max-w-md p-8 border border-white/10 flex flex-col gap-4 text-center transition-all duration-200 shadow-2xl relative overflow-hidden" style="background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(16px); border-radius: 24px;">
+            
+            <div class="w-14 h-14 mx-auto rounded-2xl bg-white/10 flex items-center justify-center text-white text-2xl border border-white/20">
+              <i class="fa-solid fa-gem text-brand-accent" id="labIcon"></i>
+            </div>
+
+            <h4 class="text-2xl font-display font-bold text-white">Live CSS Preview</h4>
+            <p class="text-xs text-gray-300 font-light">Inspect how modern glassmorphic parameters interact live over vibrant background layers.</p>
+
+            <!-- Export CSS Snippet Button -->
+            <button onclick="copyLabCSS()" class="mt-4 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-xs font-mono text-white flex items-center justify-center gap-2 transition-all">
+              <i class="fa-solid fa-copy text-brand-accent"></i>
+              <span id="labCopyBtnText">Copy Generated CSS</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section id="projects" class="py-24 bg-brand-dark relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header & Filter Controls -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <span class="text-xs font-mono text-brand-accent font-bold uppercase tracking-widest block mb-2">// 04. FEATURED WORKS</span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white">Curated Projects</h2>
+        </div>
+
+        <!-- Filter Tags -->
+        <div class="flex flex-wrap gap-2 bg-slate-950 p-1.5 rounded-2xl border border-white/10" id="projectFilters">
+          <button onclick="filterProjects('all')" class="project-filter-btn active-filter px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 bg-brand-accent text-brand-black font-bold">All</button>
+          <button onclick="filterProjects('landing')" class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 text-gray-400 hover:text-white">Landing Pages</button>
+          <button onclick="filterProjects('app')" class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 text-gray-400 hover:text-white">JS Mini-Apps</button>
+          <button onclick="filterProjects('ui')" class="project-filter-btn px-4 py-2 rounded-xl text-xs font-mono transition-all duration-300 text-gray-400 hover:text-white">UI Components</button>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+        
+        <!-- Project Card 1 -->
+        <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group hover:border-brand-accent/40 transition-all duration-500 flex flex-col justify-between" data-category="landing">
+          <div class="p-6">
+            <div class="aspect-video rounded-2xl overflow-hidden mb-6 relative bg-slate-950 border border-white/10">
+              <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Landing Page Design" class="w-full h-full object-cover opacity-70 group-hover:scale-105 group-hover:opacity-90 transition-all duration-500">
+              <div class="absolute top-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono text-brand-accent font-bold">LANDING PAGE</div>
+            </div>
+            
+            <h3 class="text-xl font-display font-bold text-white group-hover:text-brand-accent transition-colors mb-2">Aurora SaaS Landing Page</h3>
+            <p class="text-gray-400 text-xs leading-relaxed mb-4">Fully responsive marketing page built with semantic HTML and Tailwind, with a mobile-first layout from the ground up.</p>
+            
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">HTML5</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">Tailwind CSS</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">JavaScript</span>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-white/5 mt-auto">
+            <button onclick="openProjectModal('Aurora SaaS Landing Page', 'A fully responsive marketing page built with semantic HTML5 and Tailwind CSS, with scroll reveal animations powered by vanilla JavaScript.', ['HTML5', 'Tailwind CSS', 'JavaScript'], 'https://github.com')" class="text-xs font-mono text-brand-accent hover:underline flex items-center gap-1.5 pt-4">
+              <span>View Details</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </button>
+            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-white pt-4 text-sm"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+        <!-- Project Card 2 -->
+        <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group hover:border-brand-neonBlue/40 transition-all duration-500 flex flex-col justify-between" data-category="app">
+          <div class="p-6">
+            <div class="aspect-video rounded-2xl overflow-hidden mb-6 relative bg-slate-950 border border-white/10">
+              <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Weather App" class="w-full h-full object-cover opacity-70 group-hover:scale-105 group-hover:opacity-90 transition-all duration-500">
+              <div class="absolute top-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono text-brand-neonBlue font-bold">JS APP</div>
+            </div>
+
+            <h3 class="text-xl font-display font-bold text-white group-hover:text-brand-neonBlue transition-colors mb-2">Weather Now</h3>
+            <p class="text-gray-400 text-xs leading-relaxed mb-4">Small weather lookup app using the Fetch API to pull live data and render it into a clean Tailwind card layout.</p>
+
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">JavaScript</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">Fetch API</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">CSS Grid</span>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-white/5 mt-auto">
+            <button onclick="openProjectModal('Weather Now', 'A lightweight weather lookup app that fetches live data from a public API and renders it with a Tailwind-styled UI. Built while leveling up async JavaScript.', ['JavaScript', 'Fetch API', 'Tailwind CSS'], 'https://github.com')" class="text-xs font-mono text-brand-neonBlue hover:underline flex items-center gap-1.5 pt-4">
+              <span>View Details</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </button>
+            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-white pt-4 text-sm"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+        <!-- Project Card 3 -->
+        <div class="project-card glass-card rounded-3xl overflow-hidden border border-white/10 group hover:border-brand-neonPurple/40 transition-all duration-500 flex flex-col justify-between" data-category="ui">
+          <div class="p-6">
+            <div class="aspect-video rounded-2xl overflow-hidden mb-6 relative bg-slate-950 border border-white/10">
+              <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="UI Component Kit" class="w-full h-full object-cover opacity-70 group-hover:scale-105 group-hover:opacity-90 transition-all duration-500">
+              <div class="absolute top-3 right-3 bg-slate-950/80 px-2.5 py-1 rounded-lg border border-white/10 text-[10px] font-mono text-brand-neonPurple font-bold">UI KIT</div>
+            </div>
+
+            <h3 class="text-xl font-display font-bold text-white group-hover:text-brand-neonPurple transition-colors mb-2">Glassmorphic Component Kit</h3>
+            <p class="text-gray-400 text-xs leading-relaxed mb-4">A small library of reusable cards, buttons, and modals styled with Tailwind's glassmorphism utilities.</p>
+
+            <div class="flex flex-wrap gap-1.5 mb-4">
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">HTML5</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">Tailwind CSS</span>
+              <span class="px-2 py-0.5 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-300">Accessibility</span>
+            </div>
+          </div>
+
+          <div class="px-6 pb-6 pt-0 flex items-center justify-between border-t border-white/5 mt-auto">
+            <button onclick="openProjectModal('Glassmorphic Component Kit', 'A small, reusable library of cards, buttons, and modals styled with Tailwind CSS glassmorphism utilities, built with keyboard accessibility in mind.', ['HTML5', 'Tailwind CSS', 'Accessibility'], 'https://github.com')" class="text-xs font-mono text-brand-neonPurple hover:underline flex items-center gap-1.5 pt-4">
+              <span>View Details</span> <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+            </button>
+            <a href="https://github.com" target="_blank" class="text-gray-400 hover:text-white pt-4 text-sm"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section id="experience" class="py-24 bg-brand-dark/50 relative">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white">
+          The Journey Timeline
+        </h2>
+        <p class="text-gray-400 mt-4">
+          A narrative of skill consolidation, team contributions, and engineering milestones.
+        </p>
+      </div>
+
+      <!-- Timeline Wrapper (Vertical Line Layout) -->
+      <div class="relative max-w-4xl mx-auto">
+        <!-- Connecting Vertical Bar Line -->
+        <div class="absolute left-1/2 -translate-x-1/2 top-0 h-full w-0.5 bg-gradient-to-b from-brand-accent via-brand-neonBlue to-brand-neonPurple"></div>
+
+        <!-- Node 1 (Right Side) -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-start">
+          <div class="hidden md:block"></div> <!-- Spacer left -->
+          <div class="relative glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-accent/30 transition-all duration-300">
+            <!-- Timeline Pointer Center Point -->
+            <div class="absolute top-8 left-0 md:-left-12 md:translate-x-1/2 w-6 h-6 rounded-full bg-brand-accent border-4 border-brand-black shadow-lg shadow-brand-accent/50 z-10"></div>
+            
+            <div class="text-brand-accent font-mono text-sm font-semibold mb-2">2024 - Present</div>
+            <h3 class="text-xl font-display font-bold text-white mb-1">Lead Architect</h3>
+            <p class="text-gray-400 text-xs mb-4">Tech-Future Lab Corp</p>
+            <p class="text-gray-300 text-sm leading-relaxed">
+              Pioneering scalable design architectures, reducing bundle builds by 35%, and managing active software releases with modern front-end engineering structures.
+            </p>
+          </div>
+        </div>
+
+        <!-- Node 2 (Left Side) -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 mb-16 items-start">
+          <div class="relative glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-neonBlue/30 transition-all duration-300 md:text-right flex flex-col md:items-end">
+            <!-- Timeline Pointer Center Point -->
+            <div class="absolute top-8 right-0 md:-right-12 md:-translate-x-1/2 w-6 h-6 rounded-full bg-brand-neonBlue border-4 border-brand-black shadow-lg shadow-brand-neonBlue/50 z-10"></div>
+            
+            <div class="text-brand-neonBlue font-mono text-sm font-semibold mb-2">2022 - 2024</div>
+            <h3 class="text-xl font-display font-bold text-white mb-1">Frontend Developer</h3>
+            <p class="text-gray-400 text-xs mb-4">Aesthetic-Core Studios</p>
+            <p class="text-gray-300 text-sm leading-relaxed">
+              Engineered rapid CSS responsive styling and custom canvas physics templates for hyper-realistic client landing pages and online dashboard architectures.
+            </p>
+          </div>
+          <div class="hidden md:block"></div> <!-- Spacer right -->
+        </div>
+
+        <!-- Node 3 (Right Side) -->
+        <div class="relative grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+          <div class="hidden md:block"></div> <!-- Spacer left -->
+          <div class="relative glass-card p-6 rounded-2xl border border-white/5 hover:border-brand-neonPurple/30 transition-all duration-300">
+            <!-- Timeline Pointer Center Point -->
+            <div class="absolute top-8 left-0 md:-left-12 md:translate-x-1/2 w-6 h-6 rounded-full bg-brand-neonPurple border-4 border-brand-black shadow-lg shadow-brand-neonPurple/50 z-10"></div>
+            
+            <div class="text-brand-neonPurple font-mono text-sm font-semibold mb-2">2020 - 2022</div>
+            <h3 class="text-xl font-display font-bold text-white mb-1">Interactive UI Freelancer</h3>
+            <p class="text-gray-400 text-xs mb-4">Global Digital Lab</p>
+            <p class="text-gray-300 text-sm leading-relaxed">
+              Consolidated absolute Mastery over core vanilla HTML, semantic grids, styling variables, DOM query structures, and asynchronous background integrations.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <section id="contact" class="py-24 bg-brand-dark relative border-t border-white/5">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Contact Info Column -->
+        <div class="lg:col-span-5 flex flex-col gap-6">
+          <span class="text-xs font-mono text-brand-accent font-bold uppercase tracking-widest block">// 06. GET IN TOUCH</span>
+          <h2 class="text-3xl sm:text-5xl font-extrabold font-display text-white leading-tight">
+            Let's Build Something Epic Together.
+          </h2>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            Have an innovative web app idea, a job opportunity, or a collaborative project? Drop a message below and I will respond within 24 hours.
+          </p>
+
+          <div class="flex flex-col gap-4 mt-2">
+            <div class="flex items-center gap-4 glass-card p-4 rounded-2xl border border-white/5">
+              <div class="w-10 h-10 rounded-xl bg-brand-accent/10 flex items-center justify-center text-brand-accent">
+                <i class="fa-solid fa-envelope"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-mono text-gray-400 block uppercase">EMAIL ADDRESS</span>
+                <a href="mailto:dev@portfolio.io" class="text-sm font-mono text-white hover:text-brand-accent font-bold">dev@portfolio.io</a>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 glass-card p-4 rounded-2xl border border-white/5">
+              <div class="w-10 h-10 rounded-xl bg-brand-neonBlue/10 flex items-center justify-center text-brand-neonBlue">
+                <i class="fa-solid fa-location-dot"></i>
+              </div>
+              <div>
+                <span class="text-[10px] font-mono text-gray-400 block uppercase">LOCATION</span>
+                <span class="text-sm font-mono text-white font-bold">Remote / Worldwide</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Form Column -->
+        <div class="lg:col-span-7">
+          <!-- Free form backend via Formspree (formspree.io) — replace YOUR_FORM_ID with your own free-tier form ID -->
+          <form id="contactForm" action="https://formspree.io/f/YOUR_FORM_ID" method="POST" class="glass-card p-8 rounded-3xl border border-white/10 flex flex-col gap-5 shadow-2xl relative">
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+              <div>
+                <label for="contactName" class="text-xs font-mono text-gray-300 block mb-2">YOUR NAME</label>
+                <input type="text" id="contactName" name="name" required class="w-full bg-slate-950/80 border border-white/10 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-brand-accent transition-colors" placeholder="Ada Lovelace">
+              </div>
+              <div>
+                <label for="contactEmail" class="text-xs font-mono text-gray-300 block mb-2">YOUR EMAIL</label>
+                <input type="email" id="contactEmail" name="email" required class="w-full bg-slate-950/80 border border-white/10 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-brand-accent transition-colors" placeholder="ada@domain.com">
+              </div>
+            </div>
+
+            <div>
+              <label for="contactType" class="text-xs font-mono text-gray-300 block mb-2">PROJECT TYPE</label>
+              <select id="contactType" name="type" class="w-full bg-slate-950/80 border border-white/10 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-brand-accent transition-colors">
+                <option value="website">Website / Landing Page</option>
+                <option value="ui">UI Component / Design Help</option>
+                <option value="collab">Learning Collaboration</option>
+                <option value="hire">Junior / Entry-Level Role</option>
+              </select>
+            </div>
+
+            <div>
+              <label for="contactMessage" class="text-xs font-mono text-gray-300 block mb-2">PROJECT MESSAGE</label>
+              <textarea id="contactMessage" name="message" rows="4" required class="w-full bg-slate-950/80 border border-white/10 rounded-xl p-3 text-sm text-white font-mono focus:outline-none focus:border-brand-accent transition-colors" placeholder="Tell me about your project goals and timeline..."></textarea>
+            </div>
+
+            <button type="submit" id="contactSubmitBtn" class="w-full py-4 rounded-xl bg-brand-accent hover:bg-emerald-400 text-brand-black font-bold font-mono text-xs uppercase tracking-wider shadow-lg shadow-brand-accent/25 hover:shadow-brand-accent/40 transition-all duration-300 flex items-center justify-center gap-2">
+              <i class="fa-solid fa-paper-plane"></i>
+              <span>Transmit Message</span>
+            </button>
+
+            <div id="contactSuccessToast" class="hidden p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-mono text-center">
+              <i class="fa-solid fa-circle-check mr-2"></i> Message sent — thanks for reaching out!
+            </div>
+            <div id="contactErrorToast" class="hidden p-4 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs font-mono text-center">
+              <i class="fa-solid fa-circle-exclamation mr-2"></i> Something went wrong — email me directly instead.
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  <footer class="py-10 bg-brand-black border-t border-white/5 font-mono text-xs text-gray-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-brand-accent"></span>
+        <span>DEV.PORTFOLIO &copy; <span id="currentYear"></span> // CRAFTED WITH SEMANTIC HTML & TAILWIND</span>
+      </div>
+      
+      <div class="flex items-center gap-6">
+        <a href="#hero" class="hover:text-white transition-colors">BACK TO TOP <i class="fa-solid fa-arrow-up text-[10px] ml-1"></i></a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
